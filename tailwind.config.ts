@@ -52,6 +52,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				stretchyo: {
+					purple: '#7E69AB',
+					'purple-dark': '#513C8F',
+					'purple-light': '#9B87F5',
+					blue: '#4AB8EA',
+					'blue-light': '#7BCEF9',
+					white: '#FFFFFF',
+					gray: '#F0F0F0'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
