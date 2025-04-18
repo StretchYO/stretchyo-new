@@ -1,19 +1,26 @@
 
+import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { useEffect, useState } from "react"
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   
-  // Make sure we only render the toggle on the client
+  // Wait until mounted to avoid hydration mismatch
   useEffect(() => {
     setMounted(true)
   }, [])
   
+  // Handle theme toggle
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark")
+  }
+  
+  // Don't render anything until mounted to prevent hydration mismatch
   if (!mounted) {
     return null
   }
@@ -25,17 +32,43 @@ export function ThemeToggle() {
           <Button
             variant="outline"
             size="icon"
-            className="relative w-9 h-9 rounded-full"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="relative w-9 h-9 rounded-full overflow-hidden"
+            onClick={toggleTheme}
             aria-label="Toggle theme"
           >
-            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
+            <div className="relative w-full h-full">
+              {/* Sun Icon with animation */}
+              <motion.div 
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ rotate: 0, scale: resolvedTheme === "dark" ? 0 : 1 }}
+                animate={{ 
+                  rotate: resolvedTheme === "dark" ? -90 : 0,
+                  scale: resolvedTheme === "dark" ? 0 : 1,
+                  opacity: resolvedTheme === "dark" ? 0 : 1
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <Sun className="h-4 w-4 text-yellow-500" />
+              </motion.div>
+              
+              {/* Moon Icon with animation */}
+              <motion.div 
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ rotate: 90, scale: resolvedTheme === "dark" ? 1 : 0 }}
+                animate={{ 
+                  rotate: resolvedTheme === "dark" ? 0 : 90,
+                  scale: resolvedTheme === "dark" ? 1 : 0,
+                  opacity: resolvedTheme === "dark" ? 1 : 0
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <Moon className="h-4 w-4 text-blue-300" />
+              </motion.div>
+            </div>
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Toggle theme</p>
+          <p>Switch to {resolvedTheme === "dark" ? "light" : "dark"} mode</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
