@@ -119,18 +119,6 @@
     animation: fadeIn 0.5s ease-out forwards;
   }
   
-  .animate-slide-up {
-    animation: slideUp 0.5s ease-out forwards;
-  }
-  
-  .animate-slide-down {
-    animation: slideDown 0.5s ease-out forwards;
-  }
-  
-  .animate-bounce-light {
-    animation: bounceLighter 2s infinite;
-  }
-  
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -139,37 +127,6 @@
     to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes bounceLighter {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
     }
   }
 }
